@@ -30,7 +30,7 @@ class DishDetail extends React.Component {
                             <br />
                         </li>
                         <li className="my-3">
-                            -- {comment.author}, {date[2]} {month[date[1] - 1]},{date[0]}
+                            -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
                         </li>
                     </div>
 
