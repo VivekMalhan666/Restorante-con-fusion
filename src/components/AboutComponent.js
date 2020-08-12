@@ -1,29 +1,54 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem,CardImg, CardImgOverlay, CardTitle,Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {Loading} from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl'
+import { Fade, Stagger } from "react-animation-components";
 
 function RenderLeader(leader){
     if(leader){
         return(
-            <Media tag="li">
-                <Media left>
-                    <Media object src={leader.leader.image} alt={leader.leader.name} />
+            <Fade in>
+                <Media tag="li">
+                    <Media left>
+                        <Media object src={baseUrl +leader.leader.image} alt={leader.leader.name} />
+                    </Media>
+                    <Media body className="ml-5">
+                        <Media heading>{leader.leader.name}</Media>
+                        <p>{leader.leader.designation}</p> 
+                        <p>{leader.leader.description}</p>
+                    </Media>
                 </Media>
-                <Media body className="ml-5">
-                    <Media heading>{leader.leader.name}</Media>
-                    <p>{leader.leader.designation}</p> 
-                    <p>{leader.leader.description}</p>
-                </Media>
-            </Media>
+            </Fade>
         );
     }
 }   
 
 function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
+    if(props.isLoading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if(props.errMess){
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.leader){
+    const leader = props.leader.map((leader) => {
         return (
-            <p><RenderLeader key={leader.id} leader={leader} /></p>
+            <Stagger in>
+                <p><RenderLeader key={baseUrl + leader.id} leader={leader} /></p>
+            </Stagger>
         );
     });
 
@@ -83,12 +108,13 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        {leader}
                     </Media>
                 </div>
             </div>
         </div>
     );
+}
 }
 
 export default About;    
