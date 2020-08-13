@@ -1,25 +1,27 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem,CardImg, CardImgOverlay, CardTitle,Card, CardBody, CardHeader, Media } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import {Loading} from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl'
-import { Fade, Stagger } from "react-animation-components";
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function RenderLeader(leader){
     if(leader){
         return(
-            <Fade in>
+            <Stagger in>
                 <Media tag="li">
                     <Media left>
-                        <Media object src={baseUrl +leader.leader.image} alt={leader.leader.name} />
+                        <FadeTransform in><Media object src={baseUrl +leader.leader.image} alt={leader.leader.name} /></FadeTransform>
                     </Media>
                     <Media body className="ml-5">
+                        <Fade in>
                         <Media heading>{leader.leader.name}</Media>
                         <p>{leader.leader.designation}</p> 
                         <p>{leader.leader.description}</p>
+                        </Fade>
                     </Media>
                 </Media>
-            </Fade>
+            </Stagger>
         );
     }
 }   
@@ -46,9 +48,7 @@ function About(props) {
     else if (props.leader){
     const leader = props.leader.map((leader) => {
         return (
-            <Stagger in>
-                <p><RenderLeader key={baseUrl + leader.id} leader={leader} /></p>
-            </Stagger>
+            <p><RenderLeader key={baseUrl + leader.id} leader={leader} /></p>
         );
     });
 

@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import { Provider } from 'react-redux';
 import { ConfigureStore} from './redux/configureStore'
-import { render } from '@testing-library/react';
 const store = ConfigureStore();
 
 
